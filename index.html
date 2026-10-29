@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Belangrijke vraag</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #dfcda5;
+    }
+    h1 { margin-bottom: 40px; }
+    button {
+      font-size: 20px;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+    }
+    #ja { background: #2e7d32; }
+    #nee { background: #c62828; position: absolute; }
+  </style>
+</head>
+<body>
+  <h1>Ga jij vanavond de boodschappen doen?</h1>
+  <button id="ja">Ja</button>
+  <button id="nee">Nee</button>
+
+  <script>
+    const ja = document.getElementById("ja");
+    const nee = document.getElementById("nee");
+    const vraag = document.querySelector("h1");
+
+    // Zet de Nee-knop bij het laden naast de Ja-knop
+    const plekJa = ja.getBoundingClientRect();
+    nee.style.left = plekJa.right + 20 + "px";
+    nee.style.top = plekJa.top + "px";
+
+    // Verplaats de Nee-knop naar een willekeurige plek binnen het scherm
+    function springWeg() {
+      const maxX = window.innerWidth - nee.offsetWidth;
+      const maxY = window.innerHeight - nee.offsetHeight;
+      nee.style.left = Math.random() * maxX + "px";
+      nee.style.top = Math.random() * maxY + "px";
+    }
+
+    nee.addEventListener("mouseenter", springWeg);
+    nee.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  springWeg();
+}, { passive: false });
+
+    ja.addEventListener("click", () => {
+      vraag.textContent = "Top, afgesproken!";
+      nee.style.display = "none";
+    });
+  </script>
+</body>
+</html>
